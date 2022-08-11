@@ -12,6 +12,7 @@
 		048CF17528A51AC50016D0E3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 048CF17428A51AC50016D0E3 /* Assets.xcassets */; };
 		048CF17828A51AC50016D0E3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 048CF17628A51AC50016D0E3 /* LaunchScreen.storyboard */; };
 		048CF18028A550C30016D0E3 /* PageControlVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048CF17F28A550C30016D0E3 /* PageControlVC.swift */; };
+		048CF18228A59DE40016D0E3 /* Extension + UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 048CF18128A59DE40016D0E3 /* Extension + UIViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,7 @@
 		048CF17728A51AC50016D0E3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		048CF17928A51AC50016D0E3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		048CF17F28A550C30016D0E3 /* PageControlVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageControlVC.swift; sourceTree = "<group>"; };
+		048CF18128A59DE40016D0E3 /* Extension + UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension + UIViewController.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +59,7 @@
 				048CF16B28A51AC00016D0E3 /* AppDelegate.swift */,
 				048CF16F28A51AC00016D0E3 /* ViewController.swift */,
 				048CF17F28A550C30016D0E3 /* PageControlVC.swift */,
+				048CF18128A59DE40016D0E3 /* Extension + UIViewController.swift */,
 				048CF17428A51AC50016D0E3 /* Assets.xcassets */,
 				048CF17628A51AC50016D0E3 /* LaunchScreen.storyboard */,
 				048CF17928A51AC50016D0E3 /* Info.plist */,
@@ -136,6 +139,7 @@
 			files = (
 				048CF17028A51AC00016D0E3 /* ViewController.swift in Sources */,
 				048CF18028A550C30016D0E3 /* PageControlVC.swift in Sources */,
+				048CF18228A59DE40016D0E3 /* Extension + UIViewController.swift in Sources */,
 				048CF16C28A51AC00016D0E3 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

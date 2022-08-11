@@ -33,16 +33,8 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setupViews()
-        
-
     }
-    
-    
-  
-    
-    
     
     // MARK: - Setups for view:
     
@@ -59,9 +51,9 @@ class ViewController: UIViewController {
         view.addSubview(startButton)
         setConstrainsforButton()
         
-//        startButton.addTarget(self,
-//                              action: #selector(startButtonPressed),
-//                              for: .touchUpInside)
+        startButton.addTarget(self,
+                              action: #selector(startButtonPressed),
+                              for: .touchUpInside)
         
         
     }
@@ -82,9 +74,7 @@ class ViewController: UIViewController {
         self.navigationController?.navigationBar.barStyle = .black
         navigationController?.navigationBar.isTranslucent = false
         
-        
     }
-    
     
 // MARK: - CONSTRAINS
     
@@ -96,7 +86,18 @@ class ViewController: UIViewController {
             startButton.widthAnchor.constraint(equalToConstant: 150)
         ])
     }
+    
+// MARK: - Navigations
+    
+    @objc private func startButtonPressed() {
+        let pageControlVC = PageControlVC()
+        navigationController?.pushViewController(pageControlVC, animated: true)
+    }
+    
 }
+
+
+// MARK: - Extensions
 
 extension ViewController {
     
