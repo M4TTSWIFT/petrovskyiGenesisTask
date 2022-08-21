@@ -67,13 +67,14 @@ class ViewController: UIViewController {
         
         // Title color
         navigationController?.navigationBar.titleTextAttributes = [
-            .foregroundColor: UIColor.white
+            .foregroundColor: UIColor.black
         ]
         
+        /*
         // Navigation bar color
-        self.navigationController?.navigationBar.barStyle = .black
+        self.navigationController?.navigationBar.barStyle = .default
         navigationController?.navigationBar.isTranslucent = false
-        
+        */
     }
     
 // MARK: - CONSTRAINS
@@ -90,26 +91,11 @@ class ViewController: UIViewController {
 // MARK: - Navigations
     
     @objc private func startButtonPressed() {
-        let pageControlVC = PageControlVC()
-        navigationController?.pushViewController(pageControlVC, animated: true)
+        let rootViewController = PageControlVC()
+        let pageControlVC = UINavigationController(
+                            rootViewController: rootViewController)
+        pageControlVC.modalPresentationStyle = .automatic
+        present(pageControlVC, animated: true)
     }
-    
-}
-
-
-// MARK: - Extensions
-
-extension ViewController {
-    
-    func addSomeGradientToLayer(topUIColor: UIColor, bottonUIColor: UIColor) {
-        let gradient = CAGradientLayer()
-        gradient.frame = view.bounds
-        gradient.colors = [topUIColor.cgColor, bottonUIColor.cgColor]
-        gradient.locations = [0.0, 1.0]
-        gradient.startPoint = CGPoint(x: 0, y: 0)
-        gradient.endPoint = CGPoint(x: 0, y: 1)
-        view.layer.insertSublayer(gradient, at: 0)
-    }
-    
 }
 
