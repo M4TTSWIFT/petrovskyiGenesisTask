@@ -61,31 +61,31 @@ class PageControlVC: UIViewController {
     
     private var currentPage = 0
     
-    private var continueButtonHasBeenPressed = 0
-    
     //MARK: - ViewDidLoad:
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
         addSomeGradientToLayer(topUIColor: primaryColor, bottonUIColor: secondaryColor)
         navigationController?.navigationBar.backgroundColor = .black
         navigationController?.navigationBar.titleTextAttributes = textAttributes
-
+        
         view.addSubview(collectionView)
         setupCollectionView()
         
-        initPageControl()
         
         view.addSubview(kitsLabel)
         setupKitsLabel()
         
         view.addSubview(continueButton)
-        setupForButton()
         continueButton.addTarget(self,
                                  action: #selector(continueButtonPressed),
                                  for: .touchUpInside)
         
+        view.addSubview(pageControl)
+        initPageControl()
+        setConstraints()
 
     }
     
@@ -99,70 +99,42 @@ class PageControlVC: UIViewController {
         collectionView.delegate = self
         collectionView.dataSource = self
         
-        collectionView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        collectionView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        collectionView.heightAnchor.constraint(equalToConstant: 500).isActive = true
-        collectionView.widthAnchor.constraint(equalToConstant: 500).isActive = true
     }
     
     private func setupKitsLabel() {
-        kitsLabel.frame = CGRect(x: view.safeAreaLayoutGuide.accessibilityFrame.midX + 80,
-                                 y: 70,
-                                 width: 250,
-                                 height: 100)
-        
-        kitsLabel.numberOfLines = 2
+        kitsLabel.numberOfLines = 1
         kitsLabel.contentMode = .center
         kitsLabel.textAlignment = .center
         kitsLabel.textColor = UIColor.white
         kitsLabel.backgroundColor = .clear
-    }
-    
-    private func setupForButton() {
-        NSLayoutConstraint.activate([
-            continueButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            continueButton.centerYAnchor.constraint(equalTo: collectionView.bottomAnchor, constant: 60),
-            continueButton.heightAnchor.constraint(equalToConstant: 50),
-            continueButton.widthAnchor.constraint(equalToConstant: 150)
-        ])
+        kitsLabel.translatesAutoresizingMaskIntoConstraints = false
     }
     
     private func initPageControl() {
-        self.pageControl.numberOfPages = data.count
-        self.pageControl.currentPage = 0
-        self.pageControl.tintColor = UIColor.purple
-        self.pageControl.pageIndicatorTintColor = UIColor.black
-        self.pageControl.currentPageIndicatorTintColor = UIColor.cyan
-        self.view.addSubview(pageControl)
-        
-        
-        // CONSTRAINS
-        pageControl.frame = CGRect(x: view.safeAreaLayoutGuide.accessibilityFrame.midX + 107,
-                                   y: view.safeAreaLayoutGuide.accessibilityFrame.minY + 750,
-                                   width: 200,
-                                   height: 50)
+        pageControl.numberOfPages = data.count
+        pageControl.currentPage = 0
+        pageControl.tintColor = UIColor.purple
+        pageControl.pageIndicatorTintColor = UIColor.black
+        pageControl.currentPageIndicatorTintColor = UIColor.cyan
+        pageControl.translatesAutoresizingMaskIntoConstraints = false
     }
     
     @objc private func continueButtonPressed() {
-
         let collectionBounds = self.collectionView.bounds
         let contentOffset = CGFloat(floor(self.collectionView.contentOffset.x + collectionBounds.size.width))
         self.moveCollectionToFrame(contentOffset: contentOffset)
-    
         
-        if contentOffset >= 1500.0 && continueButtonHasBeenPressed == 0 {
+        if contentOffset >= 1350.0 && UserData.shared.isFirstRun == true  {
             continueButtonSegue()
-            continueButtonHasBeenPressed += 1
-        } else if continueButtonHasBeenPressed == 1 {
-                showAlert(title: "The next view", message: "Has already opened once")
+            UserDefaults.standard.set(false, forKey: "isFirstRun")
+            
+        } else if UserData.shared.isFirstRun == false && continueButton.title(for: .normal) == "CONTINUE" {
+                showAlert(title: "The next view",
+                          message: "Has been already opened once")
             }
-        
         }
         
-    
-    
     func moveCollectionToFrame(contentOffset : CGFloat) {
-
             let frame: CGRect = CGRect(x: contentOffset,
                                        y: self.collectionView.contentOffset.y,
                                        width: self.collectionView.frame.width,
@@ -171,6 +143,29 @@ class PageControlVC: UIViewController {
             self.collectionView.scrollRectToVisible(frame, animated: true)
         }
     
+    //MARK: - Constraints:
+    
+    private func setConstraints() {
+        NSLayoutConstraint.activate([
+            kitsLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            kitsLabel.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
+            
+            collectionView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            collectionView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            collectionView.heightAnchor.constraint(equalToConstant: 450),
+            collectionView.widthAnchor.constraint(equalToConstant: 450),
+            
+            continueButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            continueButton.centerYAnchor.constraint(equalTo: collectionView.bottomAnchor, constant: 50),
+            continueButton.heightAnchor.constraint(equalToConstant: 50),
+            continueButton.widthAnchor.constraint(equalToConstant: 150),
+            
+            pageControl.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            pageControl.centerYAnchor.constraint(equalTo: continueButton.topAnchor, constant: -10),
+            pageControl.heightAnchor.constraint(equalToConstant: 50),
+            pageControl.widthAnchor.constraint(equalToConstant: 200)
+        ])
+    }
 }
 
 //MARK: - Extensions
@@ -193,7 +188,6 @@ extension PageControlVC: UICollectionViewDelegateFlowLayout, UICollectionViewDat
     }
     
     // pageControl statement:
-    
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let indexPage = Int(scrollView.contentOffset.x / UIScreen.main.bounds.width)
@@ -228,8 +222,5 @@ extension PageControlVC: UICollectionViewDelegateFlowLayout, UICollectionViewDat
             
     alert.addAction(okeyAction)
     present(alert, animated: true)
-    
     }
-    
-    
 }

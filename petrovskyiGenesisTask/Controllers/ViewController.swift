@@ -30,7 +30,6 @@ class ViewController: UIViewController {
         return button
     }()
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
@@ -39,7 +38,6 @@ class ViewController: UIViewController {
     // MARK: - Setups for view:
     
     private func setupViews() {
-        
         // backGround Color is:
         addSomeGradientToLayer(topUIColor: primaryColor,
                                            bottonUIColor: secondaryColor)
@@ -61,7 +59,6 @@ class ViewController: UIViewController {
     // MARK: - setup NavigationBar:
     
     private func setupNavigationBar() {
-        
         // Set title for navigation bar
         title = "PETROVSKYI GENESIS"
         
@@ -69,12 +66,6 @@ class ViewController: UIViewController {
         navigationController?.navigationBar.titleTextAttributes = [
             .foregroundColor: UIColor.black
         ]
-        
-        /*
-        // Navigation bar color
-        self.navigationController?.navigationBar.barStyle = .default
-        navigationController?.navigationBar.isTranslucent = false
-        */
     }
     
 // MARK: - CONSTRAINS
